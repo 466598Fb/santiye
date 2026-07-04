@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="utf-8">
@@ -7,31 +7,10 @@
 <body>
   <p id="status">Baglaniliyor...</p>
   <script>
-    var targetUrl = "https://4c818f8763e6e9.lhr.life";
-    var attempts = 0;
-    function tryRedirect() {
-      attempts++;
-      document.getElementById("status").textContent = attempts > 1
-        ? ("Yeniden deneniyor... (" + attempts + ")")
-        : "Baglaniliyor...";
-      fetch(targetUrl + "/healthz")
-        .then(function(r) {
-          if (r.ok) { window.location.replace(targetUrl); }
-          else { scheduleRetry(); }
-        })
-        .catch(scheduleRetry);
-    }
-    function scheduleRetry() {
-      var el = document.getElementById("status");
-      var sec = 10;
-      el.textContent = "Sunucu hazirlanıyor, " + sec + " saniye sonra tekrar...";
-      var t = setInterval(function() {
-        sec--;
-        el.textContent = "Sunucu hazirlanıyor, " + sec + " saniye sonra tekrar...";
-        if (sec <= 0) { clearInterval(t); tryRedirect(); }
-      }, 1000);
-    }
-    tryRedirect();
-  </script>
+    var targetUrl = "https://web-production-f2277.up.railway.app";
+    fetch(targetUrl + "/healthz")
+      .then(function(r) { if (r.ok) { window.location.replace(targetUrl); } else { document.getElementById('status').textContent = 'Sunucu hazir degil, yenileyin.'; } })
+      .catch(function() { document.getElementById('status').textContent = 'Sunucu hazir degil, yenileyin.'; });
+  <\/script>
 </body>
 </html>
