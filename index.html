@@ -1,37 +1,23 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
-<head>
-  <meta charset="utf-8">
-  <title>Santiye Not Defteri</title>
-</head>
+<head><meta charset="utf-8"><title>Santiye Not Defteri</title></head>
 <body>
   <p id="status">Baglaniliyor...</p>
   <script>
-    var targetUrl = "https://lighter-fool-mambo-curve.trycloudflare.com";
+    var targetUrl = "https://reservation-dip-edinburgh-wendy.trycloudflare.com";
     var attempts = 0;
     function tryRedirect() {
       attempts++;
-      document.getElementById("status").textContent = attempts > 1
-        ? ("Yeniden deneniyor... (" + attempts + ")")
-        : "Baglaniliyor...";
+      document.getElementById("status").textContent = attempts > 1 ? ("Yeniden deneniyor... (" + attempts + ")") : "Baglaniliyor...";
       fetch(targetUrl + "/healthz")
-        .then(function(r) {
-          if (r.ok) { window.location.replace(targetUrl); }
-          else { scheduleRetry(); }
-        })
+        .then(function(r) { if (r.ok) { window.location.replace(targetUrl); } else { scheduleRetry(); } })
         .catch(scheduleRetry);
     }
     function scheduleRetry() {
-      var el = document.getElementById("status");
-      var sec = 10;
+      var el = document.getElementById("status"); var sec = 10;
       el.textContent = "Sunucu hazirlanıyor, " + sec + " saniye sonra tekrar...";
-      var t = setInterval(function() {
-        sec--;
-        el.textContent = "Sunucu hazirlanıyor, " + sec + " saniye sonra tekrar...";
-        if (sec <= 0) { clearInterval(t); tryRedirect(); }
-      }, 1000);
+      var t = setInterval(function() { sec--; el.textContent = "Sunucu hazirlanıyor, " + sec + " saniye sonra tekrar..."; if (sec <= 0) { clearInterval(t); tryRedirect(); } }, 1000);
     }
     tryRedirect();
-  </script>
-</body>
-</html>
+  <\/script>
+</body></html>
